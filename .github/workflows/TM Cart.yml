@@ -1,0 +1,63 @@
+
+name: Run TM Cart Postman API Tests
+
+on:
+  push:
+    branches:
+      - Ranjith
+
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Install Node.js and npm at runtime
+      - name: Install Node.js and npm
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs npm
+
+      # 3. Verify Node.js and npm
+      - name: Verify Node.js Installation
+        run: |
+          node --version
+          npm --version
+
+      # 4. Install Newman and HTML Extra Reporter
+      - name: Install Newman
+        run: |
+          sudo npm install -g newman newman-reporter-htmlextra
+
+      # 5. Verify Newman installation
+      - name: Verify Newman Installation
+        run: newman --version
+
+      # 6. Create reports directory
+      - name: Create Reports Directory
+        run: mkdir -p reports
+
+      # 7. Execute TM Cart Postman Collection
+      - name: Run TM Cart API Tests
+        run: |
+          newman run "scripts/TM Cart Project.postman_collection.json" \
+            -e "scripts/TM Cart ENV.postman_environment.json" \
+            --reporters cli,json,htmlextra \
+            --reporter-json-export reports/report.json \
+            --reporter-htmlextra-export reports/report.html
+
+      # 8. Upload reports even if tests fail
+      - name: Upload Test Reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: TM-Cart-API-Test-Reports
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14

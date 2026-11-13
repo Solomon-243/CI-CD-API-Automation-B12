@@ -1,0 +1,1056 @@
+{
+  "info": {
+    "_postman_id": "64cdc309-7616-4b9b-b05d-64c03857c652",
+    "name": "TMCart",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50810072",
+    "_collection_link": "https://go.postman.co/collection/50810072-64cdc309-7616-4b9b-b05d-64c03857c652?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "gotechmasters.com",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});\r\n\r\n// Get Set-Cookie response header\r\nconst cookie = pm.response.headers.get(\"Set-Cookie\");\r\n\r\nconsole.log(\"Complete Cookie:\", cookie);\r\n\r\n// Store complete cookie\r\npm.environment.set(\"cookie\", cookie);\r\n\r\n// Extract XSRF-TOKEN\r\nconst xsrfMatch = cookie.match(/XSRF-TOKEN=([^;]+)/);\r\n\r\nif (xsrfMatch) {\r\n    const xsrfToken = decodeURIComponent(xsrfMatch[1]).trim();\r\n\r\n    pm.environment.set(\"XSRF-TOKEN\", xsrfToken);\r\n\r\n    console.log(\"XSRF-TOKEN:\", xsrfToken);\r\n}\r\n\r\n// Extract botble_session\r\nconst sessionMatch = cookie.match(/botble_session=([^;]+)/);\r\n\r\nif (sessionMatch) {\r\n    const botbleSession = decodeURIComponent(sessionMatch[1]).trim();\r\n\r\n    pm.environment.set(\"botble_session\", botbleSession);\r\n\r\n    console.log(\"botble_session:\", botbleSession);\r\n}\r\n\r\n// Verify saved variables\r\nconsole.log(\"All cookies stored successfully\");\r\n\r\nconst Textdata = pm.response.text();\r\n// Extract CSRF Token from HTML response content\r\nlet csrfToken = Textdata.match(/name=\"csrf-token\" content=\"(.*)\"/)[1];\r\nconsole.log(csrfToken)\r\n\r\npm.environment.set(\"csrfToken\", csrfToken)"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-GB,en;q=0.9,en-US;q=0.8"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=0, i"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "document"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "navigate"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "none"
+          },
+          {
+            "key": "sec-fetch-user",
+            "value": "?1"
+          },
+          {
+            "key": "upgrade-insecure-requests",
+            "value": "1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            ""
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/' \\\r  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \\\r  -H 'accept-language: en-GB,en;q=0.9,en-US;q=0.8' \\\r  -H 'cache-control: no-cache' \\\r  -H 'pragma: no-cache' \\\r  -H 'priority: u=0, i' \\\r  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r  -H 'sec-ch-ua-mobile: ?0' \\\r  -H 'sec-ch-ua-platform: \"Windows\"' \\\r  -H 'sec-fetch-dest: document' \\\r  -H 'sec-fetch-mode: navigate' \\\r  -H 'sec-fetch-site: none' \\\r  -H 'sec-fetch-user: ?1' \\\r  -H 'upgrade-insecure-requests: 1' \\\r  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0'"
+      },
+      "response": []
+    },
+    {
+      "name": "product-categories",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "x-xsrf-token",
+            "value": "eyJpdiI6IkMwbGc3dGVRTHhhSHI2eDE0Wm1Dd1E9PSIsInZhbHVlIjoiTXZRNHBHOFJCenlQaHhhN1l0dTIvdm83aVBvb002eURQUGdOOUp6c0wvVmhjd3VFRXJ1NmFoaWc0V2UrM0ZGR3FHZytIYmorRW4waEpBcmlXQm1ZNVJOcVZjbld6RG04OWRzQUpVNEZBRi9uVkhGbTU0MklxZEZxV0thTjdxdnAiLCJtYWMiOiJjZGY3OGU2OWYyYmI0NTQwNWQ0NTUzZTU5MzUxY2M2NGE0YjljNWFhYWVjYmNkODZkNDM1MjczYWMwM2U0Nzk0IiwidGFnIjoiIn0="
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/ajax/featured-product-categories",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "ajax",
+            "featured-product-categories"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/ajax/featured-product-categories' \\\r\n  -H 'accept: application/json, text/plain, */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IkMwbGc3dGVRTHhhSHI2eDE0Wm1Dd1E9PSIsInZhbHVlIjoiTXZRNHBHOFJCenlQaHhhN1l0dTIvdm83aVBvb002eURQUGdOOUp6c0wvVmhjd3VFRXJ1NmFoaWc0V2UrM0ZGR3FHZytIYmorRW4waEpBcmlXQm1ZNVJOcVZjbld6RG04OWRzQUpVNEZBRi9uVkhGbTU0MklxZEZxV0thTjdxdnAiLCJtYWMiOiJjZGY3OGU2OWYyYmI0NTQwNWQ0NTUzZTU5MzUxY2M2NGE0YjljNWFhYWVjYmNkODZkNDM1MjczYWMwM2U0Nzk0IiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IlJKN08ySDZOb2R6N1JiRTdDUTRPRVE9PSIsInZhbHVlIjoiVVo3TWtHRTg5algrcGJwZGFRdkpqZTdMdDU1OS9wT2o1WFh5RkRvdHhlOTF3Qm5jKzlLODhRWi81SmdsYWdBVlREYVJQeWg4aXZaMnZHK1JMaFl4Ri9EcmtWbGk2NW5ad3lEQ3hDbGZhcVB1aFhYQnhDeUlPTEk0amZ3M2ZMdTUiLCJtYWMiOiJkZjRjNTIwZWRjNWQ0Y2NkNTZkOGIzNDUzMmZhN2VjNmJjY2E3YjY5YmMzYjEyNGE3ODdkYzVlOGEyNDM2ZWIyIiwidGFnIjoiIn0%3D' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-requested-with: XMLHttpRequest' \\\r\n  -H 'x-xsrf-token: eyJpdiI6IkMwbGc3dGVRTHhhSHI2eDE0Wm1Dd1E9PSIsInZhbHVlIjoiTXZRNHBHOFJCenlQaHhhN1l0dTIvdm83aVBvb002eURQUGdOOUp6c0wvVmhjd3VFRXJ1NmFoaWc0V2UrM0ZGR3FHZytIYmorRW4waEpBcmlXQm1ZNVJOcVZjbld6RG04OWRzQUpVNEZBRi9uVkhGbTU0MklxZEZxV0thTjdxdnAiLCJtYWMiOiJjZGY3OGU2OWYyYmI0NTQwNWQ0NTUzZTU5MzUxY2M2NGE0YjljNWFhYWVjYmNkODZkNDM1MjczYWMwM2U0Nzk0IiwidGFnIjoiIn0='"
+      },
+      "response": []
+    },
+    {
+      "name": "popular-products?limit=8",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "x-xsrf-token",
+            "value": "eyJpdiI6IkMwbGc3dGVRTHhhSHI2eDE0Wm1Dd1E9PSIsInZhbHVlIjoiTXZRNHBHOFJCenlQaHhhN1l0dTIvdm83aVBvb002eURQUGdOOUp6c0wvVmhjd3VFRXJ1NmFoaWc0V2UrM0ZGR3FHZytIYmorRW4waEpBcmlXQm1ZNVJOcVZjbld6RG04OWRzQUpVNEZBRi9uVkhGbTU0MklxZEZxV0thTjdxdnAiLCJtYWMiOiJjZGY3OGU2OWYyYmI0NTQwNWQ0NTUzZTU5MzUxY2M2NGE0YjljNWFhYWVjYmNkODZkNDM1MjczYWMwM2U0Nzk0IiwidGFnIjoiIn0="
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/ajax/popular-products?limit=8",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "ajax",
+            "popular-products"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "8"
+            }
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/ajax/popular-products?limit=8' \\\r\n  -H 'accept: application/json, text/plain, */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IkMwbGc3dGVRTHhhSHI2eDE0Wm1Dd1E9PSIsInZhbHVlIjoiTXZRNHBHOFJCenlQaHhhN1l0dTIvdm83aVBvb002eURQUGdOOUp6c0wvVmhjd3VFRXJ1NmFoaWc0V2UrM0ZGR3FHZytIYmorRW4waEpBcmlXQm1ZNVJOcVZjbld6RG04OWRzQUpVNEZBRi9uVkhGbTU0MklxZEZxV0thTjdxdnAiLCJtYWMiOiJjZGY3OGU2OWYyYmI0NTQwNWQ0NTUzZTU5MzUxY2M2NGE0YjljNWFhYWVjYmNkODZkNDM1MjczYWMwM2U0Nzk0IiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IlJKN08ySDZOb2R6N1JiRTdDUTRPRVE9PSIsInZhbHVlIjoiVVo3TWtHRTg5algrcGJwZGFRdkpqZTdMdDU1OS9wT2o1WFh5RkRvdHhlOTF3Qm5jKzlLODhRWi81SmdsYWdBVlREYVJQeWg4aXZaMnZHK1JMaFl4Ri9EcmtWbGk2NW5ad3lEQ3hDbGZhcVB1aFhYQnhDeUlPTEk0amZ3M2ZMdTUiLCJtYWMiOiJkZjRjNTIwZWRjNWQ0Y2NkNTZkOGIzNDUzMmZhN2VjNmJjY2E3YjY5YmMzYjEyNGE3ODdkYzVlOGEyNDM2ZWIyIiwidGFnIjoiIn0%3D' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-requested-with: XMLHttpRequest' \\\r\n  -H 'x-xsrf-token: eyJpdiI6IkMwbGc3dGVRTHhhSHI2eDE0Wm1Dd1E9PSIsInZhbHVlIjoiTXZRNHBHOFJCenlQaHhhN1l0dTIvdm83aVBvb002eURQUGdOOUp6c0wvVmhjd3VFRXJ1NmFoaWc0V2UrM0ZGR3FHZytIYmorRW4waEpBcmlXQm1ZNVJOcVZjbld6RG04OWRzQUpVNEZBRi9uVkhGbTU0MklxZEZxV0thTjdxdnAiLCJtYWMiOiJjZGY3OGU2OWYyYmI0NTQwNWQ0NTUzZTU5MzUxY2M2NGE0YjljNWFhYWVjYmNkODZkNDM1MjczYWMwM2U0Nzk0IiwidGFnIjoiIn0='"
+      },
+      "response": []
+    },
+    {
+      "name": "add-to-cart_1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json, text/javascript, */*; q=0.01"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "content-type",
+            "value": "application/x-www-form-urlencoded; charset=UTF-8"
+          },
+          {
+            "key": "origin",
+            "value": "https://ecom.gotechmasters.com"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-csrf-token",
+            "value": "{{csrfToken}}"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "id=107",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/cart/add-to-cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "cart",
+            "add-to-cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/cart/add-to-cart' \\\r\n  -H 'accept: application/json, text/javascript, */*; q=0.01' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IktHU1pOZ1NoMGVqVTRnU1EwYUp6Q1E9PSIsInZhbHVlIjoiaXJwOFdiNE5YKzlXY2o5UjVzNTN3c1FLV1ZuZjJOcDJDQUpTNXhOQytrY2k3VUVKRW5SQ0hhUnB2OWs0azBVM3hpelRyOHR1QUhUSE04NWNXVXZBZXVNSjdVeGp3Q0ZZMEFzZVgvS29ZNmtSUlphb2kvWlR2Mm5XQTVnQ016Vk8iLCJtYWMiOiJiYThkMzg5ZjA3MzRkNGRkZjM3MzRjYTgzNTBhNGNkZjZlZWQzMjMyNGUxMTcwZTU3ZGRkODQ2NGQyZDU0ZWVjIiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IlJ2ZGxjS1UyQ2pKQ0Q1aWVGNm1qVmc9PSIsInZhbHVlIjoiWXZxTnovOWpmUWVTUTBOakQxZkUzdjFJYmdMMzNDTnBHeVc2TmlmUzYxUDR6cjhNV3FkYmwvVlptTGtQSVBLMFlpdWpDQXBWMFppd1VjdWJSenR5SDg4R0RPZC9ndFpjNUR5U20ybDE3ZU9wZGJKWnJxTFdmV0czVm44NzRnVUgiLCJtYWMiOiJjY2VmMWEzNzU0OTNjOTJlMmNhZDRhODk4NWVmN2RkYjg4NzVmYjkyMDhhNGM1NjRlNTJhMjcwNGI1MzhlYTExIiwidGFnIjoiIn0%3D' \\\r\n  -H 'origin: https://ecom.gotechmasters.com' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-csrf-token: u0A3VDXOPeApzX0YGnpM7GGZpEbjmxWuN5wYU2TQ' \\\r\n  -H 'x-requested-with: XMLHttpRequest' \\\r\n  --data-raw 'id=107'"
+      },
+      "response": []
+    },
+    {
+      "name": "cart_1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-csrf-token",
+            "value": "{{csrfToken}}"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/ajax/cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "ajax",
+            "cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/ajax/cart' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IlB0bHVlV1UwKzFYdUorSGZET0c2eWc9PSIsInZhbHVlIjoiNVJJSXAzOWplc2Z2ZGE4eFJmc3E2Mk9PVDZqRTZFZ0dYdnVKcEpxT0gxaW5pR0ZmRjN2akdneFJZMWRpTWZiaURWMGt0SnI4Q3R4b2VrdDZGanhZc1kwaFk5Rms0TmxLMDl2QlZuTUJGeGVyc1J1cmM0NG51T0VNRllJY0V1YW4iLCJtYWMiOiIxZDAxYzc5NjEzNzdhYWY3MjU5MzBlYTIxNmM4MGMxZjliNWRmMzc3OWY5ZWEyOTc4N2FjNzBmNjdiOThkYmNkIiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IklXNUVveFhRa3NPcFc3UXF4anRxYWc9PSIsInZhbHVlIjoiSDFHdUxndzZ1ajJVQ1RGRDFlMjRQSnNtWlJIUXgyaWxzeHhMTjBFbW1ubEV3akZtQ3ltNnREZUF6VVUzc3NNRFdyYTVKZTJlNHRqK1lsNDBCeXJXUzJ3WnVVUTV0MzhaYUgwT05VYmdsNkZYYzkvUHNxck1mQkFjek9pNjQvRTEiLCJtYWMiOiI0OGU5ZTBhYzNmMmI4ZDE3MWM4YjgyNzQ4YjRiN2U0NjZjYWQ4ZDBiNjEzMjdiOGY4NTc2NjM3NzRjY2QyNjdkIiwidGFnIjoiIn0%3D' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-csrf-token: u0A3VDXOPeApzX0YGnpM7GGZpEbjmxWuN5wYU2TQ' \\\r\n  -H 'x-requested-with: XMLHttpRequest'"
+      },
+      "response": []
+    },
+    {
+      "name": "add-to-cart_2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json, text/javascript, */*; q=0.01"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "content-type",
+            "value": "application/x-www-form-urlencoded; charset=UTF-8"
+          },
+          {
+            "key": "origin",
+            "value": "https://ecom.gotechmasters.com"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-csrf-token",
+            "value": "{{csrfToken}}"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "id=108",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/cart/add-to-cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "cart",
+            "add-to-cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/cart/add-to-cart' \\\r\n  -H 'accept: application/json, text/javascript, */*; q=0.01' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IkZXcGtRcHRSUGVmUzNBTFBMcHJLbFE9PSIsInZhbHVlIjoiV3V6N1U0MlhIUy9JUUd4eE9WVC9CUEdXTWhpKzQrbUJuRklhWCsxTnpWclZaYUtRQysyditIOEhNQlRuMEN6dHd4azA5NEVNSnZTVWNuK1pka0VjbGVuSEVGKzM5SzhCeC9rTDlpVUVraTY1dUxRY3RJVUFEOHJaVVh5VUY1YVYiLCJtYWMiOiJmZjI2MmFlODFiZjRhOTBkNzhjYWE5OGExNzczMmU5Yjc2NmFiMjFhNTkxYmU5MGQ4ZmRlNWJjMGUzNGIzMjQ5IiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IkVsYkdIcWRGelVoeGpsU2dxSjdlOXc9PSIsInZhbHVlIjoiTlR6dGZVWGllbitPZVk0NDR4OHV2djhEc3p4OFU3SWdWZW1vS3ByMFowTGJTMTA2N2l3YS9CNjdXTm01U2FIWHNPL0oveWZSS014ckxQZTUveVphVzM3VDkvZUp4N2dBSFVvNWs3em5VNGIzNUhNaER3T0toWWUxMFBkWktTMzQiLCJtYWMiOiI4NzdjNGRjYWYxMGExYjRkMmUyYTMyMzc0ZmY4YTNjNjA5ZjRhMzI2OTFhM2QxY2FhODFmNzkxMTQ1MTQ2Y2RmIiwidGFnIjoiIn0%3D' \\\r\n  -H 'origin: https://ecom.gotechmasters.com' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-csrf-token: u0A3VDXOPeApzX0YGnpM7GGZpEbjmxWuN5wYU2TQ' \\\r\n  -H 'x-requested-with: XMLHttpRequest' \\\r\n  --data-raw 'id=108'"
+      },
+      "response": []
+    },
+    {
+      "name": "cart_2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-csrf-token",
+            "value": "{{csrfToken}}"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/ajax/cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "ajax",
+            "cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/ajax/cart' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IjdxZzg1T25nOE5jZkVaTzRwU2V4L1E9PSIsInZhbHVlIjoiOWZqTTJQM3l2eXFKTy9ON0wxNGxyY2pCbFJsaXNFb1hDTFZYWmFhR0FwT1hQeEdxZFlBQyt1ZVRxdXR5NFFhUUwvUjNtM2l3eC9lQ1RZV0xOaUVCRE9hSjU0dFk1UTdtNEVPSlRZeWxnMFhqL25CWG9SWUcxSGhUZHNaSHlOLzMiLCJtYWMiOiI3NmQ1M2E5YWUzM2I3YjgxNzhmOTIxNzMxNzI5NTA0MmJiN2MwZWU3OGZmNDQ5YWQyZDNkOGI4YTUzZDhmODFhIiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IjJBckwwRDdXdGc0WG5wakQrS0NxckE9PSIsInZhbHVlIjoiRjlBdDgwRXg4QUtEMHoybys4Qml3a3lDLzdFN2Z6d0t0ZU9QS0VGTkRTdHNpeWxqYXBMV0ltb04xNnZxRG9rVWFiR0picWFpbCtNT043a2x4SXVrMmpLSGZKN3o2THVXZk96NE5lSDZVSVljT1pYQmphUE00RCt0d1l4cVVjSkciLCJtYWMiOiI5YjQ2OTdlYzE3OTVlNTVhMTJjNjNiZjMzYzE5MDliOTFhNDhhZTJmNjQxNDczNDdhM2Q4YzVlODYyNTIzMDBiIiwidGFnIjoiIn0%3D' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-csrf-token: u0A3VDXOPeApzX0YGnpM7GGZpEbjmxWuN5wYU2TQ' \\\r\n  -H 'x-requested-with: XMLHttpRequest'"
+      },
+      "response": []
+    },
+    {
+      "name": "add-to-cart_3",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json, text/javascript, */*; q=0.01"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "content-type",
+            "value": "application/x-www-form-urlencoded; charset=UTF-8"
+          },
+          {
+            "key": "origin",
+            "value": "https://ecom.gotechmasters.com"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-csrf-token",
+            "value": "{{csrfToken}}"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "id=104",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/cart/add-to-cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "cart",
+            "add-to-cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/cart/add-to-cart' \\\r\n  -H 'accept: application/json, text/javascript, */*; q=0.01' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -H 'content-type: application/x-www-form-urlencoded; charset=UTF-8' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6Im5ON0lkUkpEcDZHdEpyMDlza0FCeXc9PSIsInZhbHVlIjoiMGJBMDMzZC9acEc0VzZjWUtFeDdUYWU4ZStDZFlPejBTSjVMV3drc1ZBK3NpbVZrcERxWSthY1Z4TGlicytKWHdtMWkwNGRMUHF3MjI1RkxWaTFseEpVbDZKamVSSVZPdWlWdXlPemFaQytNR0lDemNmZzM2RGdVd0ZaTGszQkUiLCJtYWMiOiJjNDM0YmQxNjA3MWUzZDEyN2VjN2ViMjMzMGNhZjFlMzE5YmRiOGNkNDE0MGU3Y2QwNDM0ZjNmMWQzYWQ0YzE1IiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6Im1oSUxxUHZvM2dIcWZlZnRxdUZFNUE9PSIsInZhbHVlIjoiR2d2MURZY3c3YWRQTExONzFzRWQ5TWFHQW90WkVadDdUZFNyQjhmMGFscGtVa2ZtaHZpSE9FSks3emtTRWNCK3dmdDlCVnpwL0JOZ0VXRFdlMTZSUlk0WlhhdGVrL05ISEFiTE9xVzNLNjQ2R0JZVmhlN3VITG9USVZKc3hXWFciLCJtYWMiOiIzYWY3ZWYxZWJiMzliMTVjMmM2ZGNkYzczZjZlN2U2ZWJlNjIxYmY0MmZkOWNmMTNkMGZmNDlmZGQ2OTkxNjFhIiwidGFnIjoiIn0%3D' \\\r\n  -H 'origin: https://ecom.gotechmasters.com' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-csrf-token: u0A3VDXOPeApzX0YGnpM7GGZpEbjmxWuN5wYU2TQ' \\\r\n  -H 'x-requested-with: XMLHttpRequest' \\\r\n  --data-raw 'id=104'"
+      },
+      "response": []
+    },
+    {
+      "name": "cart_3",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=1, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "x-csrf-token",
+            "value": "{{csrfToken}}"
+          },
+          {
+            "key": "x-requested-with",
+            "value": "XMLHttpRequest"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/ajax/cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "ajax",
+            "cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/ajax/cart' \\\r\n  -H 'accept: */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6IlRCbSsvbXVGbTNmL0NYYUhKU09BL1E9PSIsInZhbHVlIjoiYjB4Nm9qdEI1N0pia0tUN1plbndlOWh4cWJLRzNxNVpuOTd4STFwbTBkbGE4ZEF6a3ZxZTRsRGlyRDhmVkUrSHlFcnR4TlFFY3g5WFVhL0tIUDZGZlAvYUtpSVM3UzZnRlE1STZBTlI3RVFRRk96QU51QVFOMmdpdEV4Y0p1Z0giLCJtYWMiOiI2MTcwMGE2NzJhOTI1OTY4Yzg4ODU1MDZjYjY0OWYwMmNmMWVhOWIxNGM2NzlhOTY3OWI5YjkyZjNiZGQxZjIyIiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IlZzc0hQcmNEWXRaeS80ZTRPRXRQNEE9PSIsInZhbHVlIjoib2NmY2tyNDdsa1UvMzNOWkxveDVwUThucHVOaVVkb1RxRFpmZU1MZlFGNyt1TUNNcE1NTU1USHF3VnUwYXN4R2c0Yk5ZN0g2Z1BmUFMrK25RQzhJeG93YnUyaEdqc013UnVaL1NJbEZrVVdmRGZzRmVRREprS1ZYejUrR2QxMFAiLCJtYWMiOiJhMjMzYzlhOTM3MGVmNTdhMmI5NGE0MTdiMTIxOTljZTk2ZGMyZGFmZDAxODE3Yjc2NjA5ZGUzZWNjMzRkNmU3IiwidGFnIjoiIn0%3D' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0' \\\r\n  -H 'x-csrf-token: u0A3VDXOPeApzX0YGnpM7GGZpEbjmxWuN5wYU2TQ' \\\r\n  -H 'x-requested-with: XMLHttpRequest'"
+      },
+      "response": []
+    },
+    {
+      "name": "cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//status code validation\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n//response time validation\r\npm.test(\"Response time is under 3 seconds\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(3000);\r\n});\r\n//header validation\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+          },
+          {
+            "key": "accept-language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "cache-control",
+            "value": "no-cache"
+          },
+          {
+            "key": "pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "priority",
+            "value": "u=0, i"
+          },
+          {
+            "key": "referer",
+            "value": "https://ecom.gotechmasters.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "document"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "navigate"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-origin"
+          },
+          {
+            "key": "sec-fetch-user",
+            "value": "?1"
+          },
+          {
+            "key": "upgrade-insecure-requests",
+            "value": "1"
+          },
+          {
+            "key": "user-agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+          },
+          {
+            "key": "Cookie",
+            "value": "hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN={{XSRF-TOKEN}}; botble_session={{botble_session}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://ecom.gotechmasters.com/cart",
+          "protocol": "https",
+          "host": [
+            "ecom",
+            "gotechmasters",
+            "com"
+          ],
+          "path": [
+            "cart"
+          ]
+        },
+        "description": "Generated from cURL: curl --url 'https://ecom.gotechmasters.com/cart' \\\r\n  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -b 'hcdn=AQEAlGI3FxlbWjjlVpAhVbcmfeYn0ApsRg86L3dfA4ZdtEWvoehqAAAAAABAAQCL7OHtTFQYBV9m1p3EU7zZAAAAp3hR4rZGt_PbuUkNj7AtNw; cookie_for_consent=1; XSRF-TOKEN=eyJpdiI6InNrTmpIYXJPQWc5QUtVelN4U0M2WEE9PSIsInZhbHVlIjoiUFJRc015aG10bGNmTkZwajdvcEdNeG01WHprTXo5emJCWXFMQWlOMDJFSzlnVjNHSFNBQ1pERVFxUE9OMmcrTTRMTlZaTXhNOEV0cEZ6ekZBMkZhbHk5a1dEWSthemdybDd4VXhYK2UyN0JKQ3dUWUEva0R1SGR3Wmx6SnkybWIiLCJtYWMiOiJiNGVkNDczZGVlNzZjMTEwYzAzMTBiODhmY2MyOTVlY2M5Nzc0NThkOGI1MjY5ZGYzZTM5NzRhNmFhNzkzNzE1IiwidGFnIjoiIn0%3D; botble_session=eyJpdiI6IklUNkNGdlJ0L3VkQkFpeU94VjFaT3c9PSIsInZhbHVlIjoiWm9aVlNuaXRFUEt0SjFta0VQUi9JUHNjRENudFgrV1ZURnBQME5wNFloTTd1UVdwRTRJVzRkL0xLTzNLbUlkZDdqTkc2NlFpdE1KVXlwdjZWTVFnWHVkd3Nocys1cWJtMk5jMi9kUExlQ0U0RU5DdW51SVQ2UFo5NG5Za0FvNnAiLCJtYWMiOiJjZGIwZGY0M2YwYjE2ZDEyNjc0NTAzZDg4YmNkMjYxYTljMWFlMTQzYTcxYjBjMDEzNWMwYjFmMmJhMTBlMmU5IiwidGFnIjoiIn0%3D' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=0, i' \\\r\n  -H 'referer: https://ecom.gotechmasters.com/' \\\r\n  -H 'sec-ch-ua: \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\", \"Microsoft Edge\";v=\"156\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: document' \\\r\n  -H 'sec-fetch-mode: navigate' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'sec-fetch-user: ?1' \\\r\n  -H 'upgrade-insecure-requests: 1' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0'"
+      },
+      "response": []
+    }
+  ]
+}

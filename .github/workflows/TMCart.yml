@@ -1,0 +1,55 @@
+
+name: TMCart API Automation
+
+on:
+  push:
+    branches:
+      - "Ganga"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  newman-api-tests:
+    name: Run TMCart Postman Collection
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout GitHub repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # 3. Install Newman and HTML reporter
+      - name: Install Newman
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      # 4. Create artifact folder
+      - name: Create Newman Report Folder
+        run: mkdir -p artifacts/Newman
+
+      # 5. Execute Postman collection
+      - name: Run TMCart API Collection
+        run: |
+          newman run "scripts/TMCart.postman_collection.json" \
+            -e "scripts/TMCartEnv.postman_environment.json" \
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export "artifacts/Newman/TMCart-Report.html"
+
+      # 6. Upload Newman report as GitHub artifact
+      - name: Upload Newman Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TMCart-Newman-Report
+          path: artifacts/Newman/
+          if-no-files-found: warn
+          retention-days: 30
